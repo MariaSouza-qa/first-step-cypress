@@ -5,6 +5,7 @@ const selectorsList = {
   passwordField: '[name="password"]',
   LoginButton: '.oxd-button',
   sectionTittleTopbar: '.oxd-topbar-header-title',
+  dashboardGrid:'.orangehrm-dashboard-grid',
   wrongCrendentialAlert: '.oxd-alert'
 
 }
@@ -15,7 +16,7 @@ const selectorsList = {
     cy.get(selectorsList.passwordField).type('admin123')
     cy.get(selectorsList.LoginButton).click()
     cy.location('pathname').should('equal','/web/index.php/dashboard/index')
-    cy.get(selectorsList.sectionTittleTopbar).contains('Dashboard')
+    cy.get(selectorsList.dashboardGrid)
   })
   it('Login - Fail', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
