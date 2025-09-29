@@ -8,19 +8,26 @@ const selectorsList = {
   LoginButton: '.oxd-button',
   sectionTittleTopbar: '.oxd-topbar-header-title',
   dashboardGrid:'.orangehrm-dashboard-grid',
-  wrongCrendentialAlert: '.oxd-alert'
+  wrongCrendentialAlert: '.oxd-alert',
+  infoButton: '[href="/web/index.php/pim/viewMyDetails"]',
+  FirstNameField: '[name="firstName"]',
+  LastNameField: '[name="lastName"]',
+  MidleNameField: '[name="middleName"]',
 
 }
-
-
-
-  it('Login - Success', () => {
+  it.only('User Info Update - Success', () => {
     cy.visit('auth/login')
     cy.get(selectorsList.usernameField).type(userData.userSucess.username)
     cy.get(selectorsList.passwordField).type(userData.userSucess.password)
     cy.get(selectorsList.LoginButton).click()
     cy.location('pathname').should('equal','/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboardGrid)
+    cy.get(selectorsList.infoButton).click()
+    cy.get(selectorsList.FirstNameField).clear()
+    cy.get(selectorsList.FirstNameField).type('Jungkook')
+    cy.get(selectorsList.LastNameField).clear().type('Jeon')
+    cy.get(selectorsList.MidleNameField).clear().type('Kim')
+   
   })
   it('Login - Fail', () => {
     cy.visit('auth/login')
