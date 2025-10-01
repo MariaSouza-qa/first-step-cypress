@@ -1,32 +1,34 @@
 import userData from '../fixtures/userData.json'
+import DashboardPage from '../pages/dashboardPage'
+import LoginPage from '../pages/loginPage'
+import MenuPage from '../pages/menuPage'
+
+const loginPage = new LoginPage()
+const dashboardPage = new DashboardPage()
+const menuPage = new MenuPage()
 
 describe('Orange HRM Tests', () => {
 
 const selectorsList = {
-  usernameField: '[name="username"]',
-  passwordField: '[name="password"]',
-  LoginButton: '.oxd-button',
-  sectionTittleTopbar: '.oxd-topbar-header-title',
-  dashboardGrid:'.orangehrm-dashboard-grid',
-  wrongCrendentialAlert: '.oxd-alert',
-  infoButton: '[href="/web/index.php/pim/viewMyDetails"]',
+
   FirstNameField: '[name="firstName"]',
   LastNameField: '[name="lastName"]',
   MidleNameField: '[name="middleName"]',
   genericField:'.oxd-input--active',
   dateField: '[placeholder="yyyy-dd-mm"]',
   dateCloseButton: '.--close',
-  saveButton: '.orangehrm-left-space'
+  saveButton: '.orangehrm-left-space',
+  checkBox: '.oxd-select-text'
 
 }
   it.only('User Info Update - Success', () => {
-    cy.visit('auth/login')
-    cy.get(selectorsList.usernameField).type(userData.userSucess.username)
-    cy.get(selectorsList.passwordField).type(userData.userSucess.password)
-    cy.get(selectorsList.LoginButton).click()
-    cy.location('pathname').should('equal','/web/index.php/dashboard/index')
-    cy.get(selectorsList.dashboardGrid)
-    cy.get(selectorsList.infoButton).click()
+   loginPage.accessLoginPage()
+   loginPage.loginWithUser(userData.userSucess.username,userData.userSucess.password)
+  
+   dashboardPage.checkDashboardPage()
+
+   menuPage.accessMyInfo()
+  
     cy.get(selectorsList.FirstNameField).clear()
     cy.get(selectorsList.FirstNameField).type('Jungkook')
     cy.get(selectorsList.LastNameField).clear().type('Jeon')
@@ -38,6 +40,12 @@ const selectorsList = {
     cy.get(selectorsList.dateCloseButton).click()
     cy.get(selectorsList.saveButton).eq(0).click()
     cy.get('body').should('contain','Successfully Updated')
+    cy.get(selectorsList.checkBox).eq(0).click()
+    cy.contains('.oxd-select-dropdown .oxd-select-option', 'Brazilian').click()
+    cy.get(selectorsList.checkBox).eq(1).click()
+    cy.contains('.oxd-select-dropdown .oxd-select-option', 'Single').click()
+
+    
    
   })
   it('Login - Fail', () => {
