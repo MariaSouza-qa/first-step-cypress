@@ -16,3 +16,20 @@ The main goal is to validate and ensure the reliability of core features within 
 ### Technologies Used  
 - [Cypress](https://www.cypress.io/)  
 - JavaScript / TypeScript  
+
+## Installation
+```bash
+npm install
+```
+> **NOTE:**
+>
+> It is necessary to have **node** installed
+
+## Running 
+```bash
+# You open the cypress UI
+npx cypress open
+
+#Run the automation by comand line
+npx cypress run
+```
